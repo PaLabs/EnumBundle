@@ -1,0 +1,36 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="PaLabs\EnumBundle\Translator\EnumTranslator"
+                 class="PaLabs\EnumBundle\Translator\EnumTranslator"
+                 public="true">
+            <argument type="service" id="translator"/>
+        </service>
+
+        <service id="PaLabs\EnumBundle\Doctrine\DoctrineEnumClassCacheWarmer"
+            class="PaLabs\EnumBundle\Doctrine\DoctrineEnumClassCacheWarmer"
+            public="false">
+            <tag name="kernel.cache_warmer"/>
+        </service>
+
+        <service
+                id="PaLabs\EnumBundle\Form\EnumType"
+                class="PaLabs\EnumBundle\Form\EnumType"
+                public="false">
+            <argument type="service" id="PaLabs\EnumBundle\Translator\EnumTranslator"/>
+            <tag name="form.type"/>
+        </service>
+
+        <service
+                id="PaLabs\EnumBundle\Twig\EnumExtension"
+                class="PaLabs\EnumBundle\Twig\EnumExtension"
+                public="false">
+            <argument type="service" id="PaLabs\EnumBundle\Translator\EnumTranslator"/>
+            <tag name="twig.extension"/>
+        </service>
+    </services>
+</container>
