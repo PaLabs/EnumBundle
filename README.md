@@ -2,6 +2,10 @@
 
 Bundle provide integration PaLabs/php-enum with symfony
 
+[![Build Status](https://travis-ci.com/PaLabs/EnumBundle.svg?branch=master)](https://travis-ci.com/PaLabs/EnumBundle.svg?branch=master)
+[![Latest Stable Version](https://poser.pugx.org/palabs/EnumBundle/v/stable)](https://packagist.org/packages/palabs/EnumBundle)
+[![License](https://poser.pugx.org/palabs/EnumBundle/license)](https://packagist.org/packages/palabs/EnumBundle)
+
 ## Features
 - Enum form type 
 - Enum translator (with twig extension)
