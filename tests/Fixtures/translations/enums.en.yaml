@@ -1,0 +1,7 @@
+ActionEnum:
+  VIEW: action_view
+  EDIT: action_edit
+  DELETE: action_delete
+
+action_list:
+  VIEW: action_list_view
