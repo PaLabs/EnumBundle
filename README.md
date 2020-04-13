@@ -10,6 +10,7 @@ Bundle provide integration PaLabs/php-enum with symfony
 - Enum form type 
 - Enum translator (with twig extension)
 - Doctrine integration (enum field type, types auto generation)
+- Enum auto initializer
 
 ## Installation
 1. Require bundle using composer
@@ -24,7 +25,7 @@ return [
 ];
 ```
 
-3. Create configuration (in your config dir)
+3. Create configuration (in your config dir). Example:
 ```yaml
 pa_enum:
   translator:
@@ -130,3 +131,15 @@ pa_enum:
       - '%kernel.project_dir%/src'
       - '%kernel.project_dir%/vendor/my-bundle/src'
 ```
+
+### Enum initializer
+
+To not manually call Enum::init() for every enum, you can use enum initializer. Simply add to bundle config:
+```yaml
+pa_enum:
+    initializer:
+      path:
+        - - '%kernel.project_dir%/src'
+```
+
+And bundle will automatically call init() for every enum in path. init() will be called on bundle boot. 
