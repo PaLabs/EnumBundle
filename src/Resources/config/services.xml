@@ -17,6 +17,12 @@
             <tag name="kernel.cache_warmer"/>
         </service>
 
+        <service id="PaLabs\EnumBundle\Initializer\EnumInitializerCacheWarmer"
+                 class="PaLabs\EnumBundle\Initializer\EnumInitializerCacheWarmer"
+                 public="false">
+            <tag name="kernel.cache_warmer"/>
+        </service>
+
         <service
                 id="PaLabs\EnumBundle\Form\EnumType"
                 class="PaLabs\EnumBundle\Form\EnumType"

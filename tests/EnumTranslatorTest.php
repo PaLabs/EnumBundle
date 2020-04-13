@@ -6,6 +6,7 @@ namespace PaLabs\EnumBundle\Test;
 
 use PaLabs\EnumBundle\PaEnumBundle;
 use PaLabs\EnumBundle\Test\Fixtures\ActionEnum;
+use PaLabs\EnumBundle\Test\Fixtures\BaseKernel;
 use PaLabs\EnumBundle\Translator\EnumTranslator;
 use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
@@ -50,27 +51,12 @@ class EnumTranslatorTest extends KernelTestCase
     }
 }
 
-class TranslatorKernel extends Kernel
+class TranslatorKernel extends BaseKernel
 {
-    public function registerBundles()
-    {
-        return [
-            new FrameworkBundle(),
-            new PaEnumBundle(),
-        ];
-    }
-
     public function registerContainerConfiguration(LoaderInterface $loader)
     {
+        parent::registerContainerConfiguration($loader);
         $loader->load(function (ContainerBuilder $container) {
-            $container->loadFromExtension('framework', [
-                'secret' => 'test',
-                'default_locale' => 'en',
-                'translator' => [
-                    'default_path' => __DIR__ . '/Fixtures/translations'
-                ]
-
-            ]);
             $container->loadFromExtension('pa_enum', [
                 'translator' => [
                     'domain' => 'enums',
@@ -78,10 +64,4 @@ class TranslatorKernel extends Kernel
             ]);
         });
     }
-
-    public function getCacheDir()
-    {
-        return sprintf('%s/../var/%s/cache/%s', __DIR__, (new \ReflectionClass($this))->getShortName(), $this->environment);
-    }
-
 }

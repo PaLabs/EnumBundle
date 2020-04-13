@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6ec1b2efcf919f25ef67b623d6ddd827",
+    "content-hash": "176e5b8f066d7481da236023feee3d00",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -961,16 +961,16 @@
         },
         {
             "name": "palabs/php-enum",
-            "version": "0.1.0",
+            "version": "0.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PaLabs/php-enum.git",
-                "reference": "212748f66511727954c23f646e15f0f9adb8b82f"
+                "reference": "4f400a08ded0ceaccbb766987b89bb3cebc1a0a9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PaLabs/php-enum/zipball/212748f66511727954c23f646e15f0f9adb8b82f",
-                "reference": "212748f66511727954c23f646e15f0f9adb8b82f",
+                "url": "https://api.github.com/repos/PaLabs/php-enum/zipball/4f400a08ded0ceaccbb766987b89bb3cebc1a0a9",
+                "reference": "4f400a08ded0ceaccbb766987b89bb3cebc1a0a9",
                 "shasum": ""
             },
             "require": {
@@ -1001,7 +1001,7 @@
                 "enum",
                 "php-enum"
             ],
-            "time": "2020-04-03T11:27:35+00:00"
+            "time": "2020-04-13T06:10:26+00:00"
         },
         {
             "name": "psr/cache",

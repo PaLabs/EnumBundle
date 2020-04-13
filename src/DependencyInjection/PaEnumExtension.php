@@ -7,6 +7,7 @@ use PaLabs\EnumBundle\Doctrine\DoctrineEnumClassCacheWarmer;
 use PaLabs\EnumBundle\Doctrine\DoctrineEnumProxyClassGenerator;
 use PaLabs\EnumBundle\Doctrine\EnumPathScanner;
 use PaLabs\EnumBundle\Form\EnumType;
+use PaLabs\EnumBundle\Initializer\EnumInitializerCacheWarmer;
 use PaLabs\EnumBundle\Translator\EnumTranslator;
 use PaLabs\EnumBundle\Twig\EnumExtension;
 use ReflectionClass;
@@ -30,6 +31,7 @@ class PaEnumExtension extends Extension
 
         $this->configureTranslationDomain($container, $config);
         $this->configureDoctrine($container, $config);
+        $this->configureInitializer($container, $config);
     }
 
     private function configureTranslationDomain(ContainerBuilder $container, array $config): void
@@ -75,6 +77,17 @@ class PaEnumExtension extends Extension
         // Need generate proxy classes for doctrine loader
         (new DoctrineEnumClassCacheWarmer($paths))->warmUp($container->getParameter('kernel.cache_dir'));
 
+    }
+
+    private function configureInitializer(ContainerBuilder $container, array $config)
+    {
+        if (!isset($config['initializer']) || !isset($config['initializer']['path']) || empty($config['initializer']['path'])) {
+            $container->removeDefinition(EnumInitializerCacheWarmer::class);
+            return;
+        }
+
+        $paths = $config['initializer']['path'];
+        $container->getDefinition(EnumInitializerCacheWarmer::class)->setArgument(0, $paths);
     }
 
 
