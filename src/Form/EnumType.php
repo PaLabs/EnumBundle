@@ -11,6 +11,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class EnumType extends AbstractType
 {
+    public const OPTION_TYPE = 'type';
+    public const OPTION_ITEMS = 'items';
+    public const OPTION_TRANSLATION_DOMAIN = 'value_translation_domain';
 
     public function __construct(private readonly EnumTranslator $translator)
     {
@@ -19,27 +22,25 @@ class EnumType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $choiceBuilder = function (Options $options) {
-            /** @var Enum|\UnitEnum $enum */
-            $enum = $options['type'];
+            $enum = $options[self::OPTION_TYPE];
             $choices = [];
-            if (isset($options['items'])) {
-                $values = $options['items'];
-            } else {
-                $values = match (true) {
-                    $enum instanceof Enum => $enum::values(),
-                    $enum instanceof \UnitEnum => $enum::cases(),
-                    default => throw new \LogicException(sprintf('Unknown enum type %s', get_class($enum)))
-                };
-            }
+
+            $values = match (true) {
+                isset($options[self::OPTION_ITEMS]) => $options[self::OPTION_ITEMS],
+                is_subclass_of($enum, Enum::class) => $enum::values(),
+                is_subclass_of($enum, \UnitEnum::class) => $enum::cases(),
+                default => throw new \LogicException(sprintf('Unknown enum type %s', $enum))
+            };
+
             foreach ($values as $value) {
-                $translatedLabel = $this->translator->translate($value, $options['value_translation_domain']);
+                $translatedLabel = $this->translator->translate($value, $options[self::OPTION_TRANSLATION_DOMAIN]);
                 $choices[$translatedLabel] = $value;
             }
             return $choices;
         };
 
         $choiceResolver = function ($value = null) {
-            return match(true) {
+            return match (true) {
                 $value === null => null,
                 $value instanceof Enum => $value->name(),
                 $value instanceof \BackedEnum => $value->name,
@@ -50,17 +51,31 @@ class EnumType extends AbstractType
 
         $resolver
             ->setDefaults([
-                'value_translation_domain' => 'enums',
+                self::OPTION_TRANSLATION_DOMAIN => 'enums',
                 'choices' => $choiceBuilder,
                 'choice_value' => $choiceResolver
             ])
-            ->setRequired(['type'])
-            ->setDefined(['items']);
+            ->setRequired([self::OPTION_TYPE])
+            ->setDefined([self::OPTION_ITEMS]);
 
     }
 
     public function getParent(): string
     {
         return ChoiceType::class;
+    }
+
+    public static function options(string $type, array $items = null, string $translationDomain = null): array
+    {
+        $options = [
+            self::OPTION_TYPE => $type
+        ];
+        if ($items !== null) {
+            $options[self::OPTION_ITEMS] = $items;
+        }
+        if ($translationDomain !== null) {
+            $options[self::OPTION_TRANSLATION_DOMAIN] = $translationDomain;
+        }
+        return $options;
     }
 }
