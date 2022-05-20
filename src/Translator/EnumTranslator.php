@@ -8,17 +8,14 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class EnumTranslator
 {
-    private TranslatorInterface $translator;
-    private string $defaultTranslationDomain;
 
     public function __construct(
-        TranslatorInterface $translator, string $defaultTranslationDomain)
+        private readonly TranslatorInterface $translator,
+        private readonly string $defaultTranslationDomain)
     {
-        $this->translator = $translator;
-        $this->defaultTranslationDomain = $defaultTranslationDomain;
     }
 
-    public function translate(?Enum $enum = null, string $translationDomain = null, string $enumPrefix = null): string
+    public function translate(Enum|\UnitEnum|null $enum = null, string $translationDomain = null, string $enumPrefix = null): string
     {
         if($enum === null) {
             return '';
@@ -28,12 +25,16 @@ class EnumTranslator
         return $this->translator->trans($this->translationKey($enum, $enumPrefix), [], $translationDomain);
     }
 
-    private function translationKey(Enum $enum, string $enumPrefix): string
+    private function translationKey(Enum|\UnitEnum $enum, string $enumPrefix): string
     {
-        return sprintf('%s.%s', $enumPrefix, $enum->name());
+        $enumName = match(true){
+            $enum instanceof Enum => $enum->name(),
+            $enum instanceof \UnitEnum => $enum->name
+        };
+        return sprintf('%s.%s', $enumPrefix, $enumName);
     }
 
-    private function enumName(Enum $enum): string
+    private function enumName(Enum|\UnitEnum $enum): string
     {
         return (new ReflectionClass($enum))->getShortName();
     }

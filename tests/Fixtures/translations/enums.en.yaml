@@ -5,3 +5,6 @@ ActionEnum:
 
 action_list:
   VIEW: action_list_view
+
+SomeUnitEnum:
+  FIRST_VALUE: 'first value'

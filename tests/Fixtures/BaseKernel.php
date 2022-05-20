@@ -12,7 +12,7 @@ use Symfony\Component\HttpKernel\Kernel;
 
 abstract class BaseKernel extends Kernel
 {
-    public function registerBundles()
+    public function registerBundles(): iterable
     {
         return [
             new FrameworkBundle(),
@@ -33,7 +33,7 @@ abstract class BaseKernel extends Kernel
         });
     }
 
-    public function getCacheDir()
+    public function getCacheDir(): string
     {
         return sprintf('%s/../../var/%s/cache/%s', __DIR__, (new \ReflectionClass($this))->getShortName(), $this->environment);
     }

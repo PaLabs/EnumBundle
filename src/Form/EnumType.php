@@ -11,23 +11,25 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class EnumType extends AbstractType
 {
-    private EnumTranslator $translator;
 
-    public function __construct(EnumTranslator $translator)
+    public function __construct(private readonly EnumTranslator $translator)
     {
-        $this->translator = $translator;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $choiceBuilder = function (Options $options) {
-            /** @var Enum $enum */
+            /** @var Enum|\UnitEnum $enum */
             $enum = $options['type'];
             $choices = [];
-            if(isset($options['items'])) {
+            if (isset($options['items'])) {
                 $values = $options['items'];
             } else {
-                $values = $enum::values();
+                $values = match (true) {
+                    $enum instanceof Enum => $enum::values(),
+                    $enum instanceof \UnitEnum => $enum::cases(),
+                    default => throw new \LogicException(sprintf('Unknown enum type %s', get_class($enum)))
+                };
             }
             foreach ($values as $value) {
                 $translatedLabel = $this->translator->translate($value, $options['value_translation_domain']);
@@ -37,13 +39,12 @@ class EnumType extends AbstractType
         };
 
         $choiceResolver = function ($value = null) {
-            if ($value === null) {
-                return null;
-            }
-            if ($value instanceof Enum) {
-                return $value->name();
-            }
-            return $value;
+            return match(true) {
+                $value === null => null,
+                $value instanceof Enum => $value->name(),
+                $value instanceof \BackedEnum => $value->name,
+                default => $value
+            };
         };
 
 
@@ -58,7 +59,7 @@ class EnumType extends AbstractType
 
     }
 
-    public function getParent()
+    public function getParent(): string
     {
         return ChoiceType::class;
     }

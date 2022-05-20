@@ -10,21 +10,19 @@ use Twig\TwigFunction;
 
 class EnumExtension extends AbstractExtension
 {
-    private EnumTranslator $translator;
 
-    public function __construct(EnumTranslator $translator)
+    public function __construct(private readonly EnumTranslator $translator)
     {
-        $this->translator = $translator;
     }
 
-    public function getFunctions()
+    public function getFunctions(): array
     {
-        return array(
-            new TwigFunction('translate_enum', array($this, 'translate')),
-        );
+        return [
+            new TwigFunction('translate_enum', [$this, 'translate']),
+        ];
     }
 
-    public function translate(?Enum $enum = null, string $translationDomain = null, string $enumPrefix = null): string
+    public function translate(Enum|\UnitEnum|null $enum = null, string $translationDomain = null, string $enumPrefix = null): string
     {
         return $this->translator->translate($enum, $translationDomain, $enumPrefix);
     }
