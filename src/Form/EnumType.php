@@ -65,7 +65,11 @@ class EnumType extends AbstractType
         return ChoiceType::class;
     }
 
-    public static function options(string $type, array $items = null, string $translationDomain = null): array
+    public static function options(
+        string $type,
+        array $items = null,
+        string $translationDomain = null,
+        bool $required = null): array
     {
         $options = [
             self::OPTION_TYPE => $type
@@ -75,6 +79,9 @@ class EnumType extends AbstractType
         }
         if ($translationDomain !== null) {
             $options[self::OPTION_TRANSLATION_DOMAIN] = $translationDomain;
+        }
+        if($required !== null) {
+            $options['required'] = $required;
         }
         return $options;
     }
