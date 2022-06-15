@@ -14,16 +14,20 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class EnumTranslatorTest extends KernelTestCase
 {
-    protected static $class = TranslatorKernel::class;
+
+    protected static function getKernelClass(): string
+    {
+        return TranslatorKernel::class;
+    }
 
     public function testExistingTranslationValue()
     {
-        $this->assertEquals('action_view', $this->getTranslator()->translate(ActionEnum::$VIEW));
+        $this->assertEquals('action_view', $this->getTranslator()->translate(ActionEnum::VIEW));
     }
 
     public function testNotExistingTranslation()
     {
-        $this->assertEquals('ActionEnum.NOT_TRANSLATED_ACTION', $this->getTranslator()->translate(ActionEnum::$NOT_TRANSLATED_ACTION));
+        $this->assertEquals('ActionEnum.NOT_TRANSLATED_ACTION', $this->getTranslator()->translate(ActionEnum::NOT_TRANSLATED_ACTION));
     }
 
     public function testTranslateNull()
@@ -37,7 +41,7 @@ class EnumTranslatorTest extends KernelTestCase
 
     public function testEnumPrefix()
     {
-        $this->assertEquals('action_list_view', $this->getTranslator()->translate(ActionEnum::$VIEW, 'enums', 'action_list'));
+        $this->assertEquals('action_list_view', $this->getTranslator()->translate(ActionEnum::VIEW, 'enums', 'action_list'));
     }
 
     private function getTranslator(): EnumTranslator

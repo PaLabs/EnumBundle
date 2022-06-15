@@ -3,10 +3,10 @@
 namespace PaLabs\EnumBundle\Twig;
 
 
-use PaLabs\Enum\Enum;
 use PaLabs\EnumBundle\Translator\EnumTranslator;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
+use UnitEnum;
 
 class EnumExtension extends AbstractExtension
 {
@@ -22,7 +22,7 @@ class EnumExtension extends AbstractExtension
         ];
     }
 
-    public function translate(Enum|\UnitEnum|null $enum = null, string $translationDomain = null, string $enumPrefix = null): string
+    public function translate(?UnitEnum $enum = null, string $translationDomain = null, string $enumPrefix = null): string
     {
         return $this->translator->translate($enum, $translationDomain, $enumPrefix);
     }

@@ -4,19 +4,10 @@
 namespace PaLabs\EnumBundle\Test\Fixtures;
 
 
-use PaLabs\Enum\Enum;
-use PaLabs\EnumBundle\Doctrine\DoctrineEnum;
-use PaLabs\EnumBundle\Doctrine\DoctrineEnumTrait;
-
-class BookTypeEnum extends Enum implements DoctrineEnum
+enum BookTypeEnum: string
 {
-    use DoctrineEnumTrait;
 
-    public static BookTypeEnum $MONOGRAPHY, $THESES, $COMPILATION;
+    case MONOGRAPHY = 'bk_monography';
+    case THESES = 'bk_theses';
+    case COMPILATION = 'bk_compilation';
 }
-
-BookTypeEnum::$MONOGRAPHY = new BookTypeEnum('bk_monography');
-BookTypeEnum::$THESES = new BookTypeEnum('bk_theses');
-BookTypeEnum::$COMPILATION = new BookTypeEnum('bk_compilation');
-
-BookTypeEnum::init();

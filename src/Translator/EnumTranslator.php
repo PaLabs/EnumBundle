@@ -2,9 +2,9 @@
 
 namespace PaLabs\EnumBundle\Translator;
 
-use PaLabs\Enum\Enum;
 use ReflectionClass;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use UnitEnum;
 
 class EnumTranslator
 {
@@ -15,7 +15,7 @@ class EnumTranslator
     {
     }
 
-    public function translate(Enum|\UnitEnum|null $enum = null, string $translationDomain = null, string $enumPrefix = null): string
+    public function translate(?UnitEnum $enum = null, string $translationDomain = null, string $enumPrefix = null): string
     {
         if($enum === null) {
             return '';
@@ -25,16 +25,12 @@ class EnumTranslator
         return $this->translator->trans($this->translationKey($enum, $enumPrefix), [], $translationDomain);
     }
 
-    private function translationKey(Enum|\UnitEnum $enum, string $enumPrefix): string
+    private function translationKey(UnitEnum $enum, string $enumPrefix): string
     {
-        $enumName = match(true){
-            $enum instanceof Enum => $enum->name(),
-            $enum instanceof \UnitEnum => $enum->name
-        };
-        return sprintf('%s.%s', $enumPrefix, $enumName);
+        return sprintf('%s.%s', $enumPrefix, $enum->name);
     }
 
-    private function enumName(Enum|\UnitEnum $enum): string
+    private function enumName(UnitEnum $enum): string
     {
         return (new ReflectionClass($enum))->getShortName();
     }

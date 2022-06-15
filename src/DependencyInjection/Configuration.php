@@ -21,20 +21,6 @@ class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                 ->end()
-                ->arrayNode('doctrine')
-                    ->children()
-                        ->arrayNode('path')
-                            ->scalarPrototype()->end()
-                        ->end()
-                    ->end()
-                ->end()
-                ->arrayNode('initializer')
-                    ->children()
-                        ->arrayNode('path')
-                            ->scalarPrototype()->end()
-                        ->end()
-                    ->end()
-                ->end()
             ->end();
 
         return $treeBuilder;

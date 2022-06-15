@@ -11,18 +11,6 @@
             <argument type="service" id="translator"/>
         </service>
 
-        <service id="PaLabs\EnumBundle\Doctrine\DoctrineEnumClassCacheWarmer"
-            class="PaLabs\EnumBundle\Doctrine\DoctrineEnumClassCacheWarmer"
-            public="false">
-            <tag name="kernel.cache_warmer"/>
-        </service>
-
-        <service id="PaLabs\EnumBundle\Initializer\EnumInitializerCacheWarmer"
-                 class="PaLabs\EnumBundle\Initializer\EnumInitializerCacheWarmer"
-                 public="false">
-            <tag name="kernel.cache_warmer"/>
-        </service>
-
         <service
                 id="PaLabs\EnumBundle\Form\EnumType"
                 class="PaLabs\EnumBundle\Form\EnumType"

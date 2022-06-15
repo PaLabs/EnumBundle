@@ -2,13 +2,12 @@
 
 namespace PaLabs\EnumBundle\Doctrine;
 
-use PaLabs\Enum\Enum;
 
 /**
  * Using in doctrine #[Column] attribute to define the mysql enum type.
- * Example:  #[ORM\Column(name: 'some_column', enumType: MyEnum::class,
+ * Example:  #[Column(name: 'some_column', enumType: MyEnum::class,
  *              columnDefinition: new MysqlEnumColumnDefinition(MyEnum::class))]
- * note: this is a platform lock method - if you want to swith to another platform, that you need to use another column definition
+ * note: this is a platform lock method - if you want to switch to another platform, that you need to use another column definition
  */
 class MysqlEnumColumnDefinition implements \Stringable
 {
@@ -34,7 +33,6 @@ class MysqlEnumColumnDefinition implements \Stringable
     {
         $enum = $this->enumClass;
         return match(true) {
-            is_subclass_of($enum,Enum::class) => $enum::values(),
             is_subclass_of($enum, \UnitEnum::class) => $enum::cases(),
             default => throw new \LogicException(sprintf('Unknown enum type %s', $enum))
         };
@@ -43,11 +41,8 @@ class MysqlEnumColumnDefinition implements \Stringable
     private function enumName(mixed $enum): string
     {
         return match(true) {
-            $enum instanceof DoctrineEnum => $enum->sqlValue(),
-            $enum instanceof Enum => $enum->name(),
             $enum instanceof \BackedEnum => $enum->value,
-            $enum instanceof \UnitEnum => $enum->name,
-            default => throw new \LogicException(sprintf('Unknown enum type %s', get_class($enum)))
+            default => throw new \LogicException(sprintf('Invalid enum class %s', get_class($enum)))
         };
     }
 }

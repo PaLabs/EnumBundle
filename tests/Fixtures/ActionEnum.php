@@ -4,11 +4,10 @@
 namespace PaLabs\EnumBundle\Test\Fixtures;
 
 
-use PaLabs\Enum\Enum;
-
-class ActionEnum extends Enum
+enum ActionEnum
 {
-    public static ActionEnum $VIEW, $EDIT, $DELETE;
-    public static ActionEnum $NOT_TRANSLATED_ACTION;
+    case VIEW;
+    case EDIT;
+    case DELETE;
+    case NOT_TRANSLATED_ACTION;
 }
-ActionEnum::init();

@@ -2,7 +2,6 @@
 
 namespace PaLabs\EnumBundle\Form;
 
-use PaLabs\Enum\Enum;
 use PaLabs\EnumBundle\Translator\EnumTranslator;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -27,7 +26,6 @@ class EnumType extends AbstractType
 
             $values = match (true) {
                 isset($options[self::OPTION_ITEMS]) => $options[self::OPTION_ITEMS],
-                is_subclass_of($enum, Enum::class) => $enum::values(),
                 is_subclass_of($enum, \UnitEnum::class) => $enum::cases(),
                 default => throw new \LogicException(sprintf('Unknown enum type %s', $enum))
             };
@@ -42,8 +40,7 @@ class EnumType extends AbstractType
         $choiceResolver = function ($value = null) {
             return match (true) {
                 $value === null => null,
-                $value instanceof Enum => $value->name(),
-                $value instanceof \BackedEnum => $value->name,
+                $value instanceof \UnitEnum => $value->name,
                 default => $value
             };
         };
