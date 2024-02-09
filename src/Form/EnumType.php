@@ -18,7 +18,7 @@ class EnumType extends AbstractType
     {
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $choiceBuilder = function (Options $options) {
             $enum = $options[self::OPTION_TYPE];

@@ -1,0 +1,18 @@
+version: "1.0"
+
+#Specify inspection profile for code analysis
+profile:
+  name: qodana.starter
+
+exclude:
+  - name: All
+    paths:
+      - src/Resources/frontend
+      - src/Resources/public
+      - vendor
+      - composer.lock
+
+php:
+  version: '8.2'
+
+linter: jetbrains/qodana-php:latest
