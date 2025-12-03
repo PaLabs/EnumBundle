@@ -10,7 +10,7 @@
     "doctrine/orm": "^2.8 || ^3.0",
     "symfony/form": "^6.0 || ^7.0",
     "symfony/doctrine-bridge": "^6.0 || ^7.0",
-    "symfony/translation-contracts": "^2.0",
+    "symfony/translation-contracts": "^2.0 || ^3.0",
     "symfony/framework-bundle": "^6.0 || ^7.0",
     "symfony/dependency-injection": "^6.0 || ^7.0",
     "symfony/http-kernel": "^6.0 || ^7.0",
