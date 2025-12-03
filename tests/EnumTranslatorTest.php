@@ -59,7 +59,7 @@ class EnumTranslatorTest extends KernelTestCase
 
 class TranslatorKernel extends BaseKernel
 {
-    public function registerContainerConfiguration(LoaderInterface $loader)
+    public function registerContainerConfiguration(LoaderInterface $loader): void
     {
         parent::registerContainerConfiguration($loader);
         $loader->load(function (ContainerBuilder $container) {

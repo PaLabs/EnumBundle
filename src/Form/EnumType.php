@@ -64,9 +64,9 @@ class EnumType extends AbstractType
 
     public static function options(
         string $type,
-        array $items = null,
-        string $translationDomain = null,
-        bool $required = null): array
+        ?array $items = null,
+        ?string $translationDomain = null,
+        ?bool $required = null): array
     {
         $options = [
             self::OPTION_TYPE => $type

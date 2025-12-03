@@ -9,12 +9,12 @@ namespace PaLabs\EnumBundle\Doctrine;
  *              columnDefinition: new MysqlEnumColumnDefinition(MyEnum::class))]
  * note: this is a platform lock method - if you want to switch to another platform, that you need to use another column definition
  */
-class MysqlEnumColumnDefinition implements \Stringable
+readonly class MysqlEnumColumnDefinition implements \Stringable
 {
 
     public function __construct(
-        private readonly string $enumClass,
-        private readonly bool $nullable = false)
+        private string $enumClass,
+        private bool $nullable = false)
     {
     }
 

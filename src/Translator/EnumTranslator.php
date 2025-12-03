@@ -6,16 +6,19 @@ use ReflectionClass;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use UnitEnum;
 
-class EnumTranslator
+readonly class EnumTranslator
 {
 
     public function __construct(
-        private readonly TranslatorInterface $translator,
-        private readonly string $defaultTranslationDomain)
+        private TranslatorInterface $translator,
+        private string $defaultTranslationDomain)
     {
     }
 
-    public function translate(?UnitEnum $enum = null, string $translationDomain = null, string $enumPrefix = null): string
+    public function translate(
+        ?UnitEnum $enum = null,
+        ?string $translationDomain = null,
+        ?string $enumPrefix = null): string
     {
         if($enum === null) {
             return '';

@@ -18,11 +18,11 @@ class EnumExtension extends AbstractExtension
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('translate_enum', [$this, 'translate']),
+            new TwigFunction('translate_enum', $this->translate(...)),
         ];
     }
 
-    public function translate(?UnitEnum $enum = null, string $translationDomain = null, string $enumPrefix = null): string
+    public function translate(?UnitEnum $enum = null, ?string $translationDomain = null, ?string $enumPrefix = null): string
     {
         return $this->translator->translate($enum, $translationDomain, $enumPrefix);
     }
